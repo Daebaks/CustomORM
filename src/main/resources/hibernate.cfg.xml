@@ -15,15 +15,11 @@
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 
 		<!-- These are JDBC Connection Credentials -->
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres?currentSchema=hibernate</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres?currentSchema=project1</property>
 		<property name="hibernate.connection.username">postgres</property>
-		<property name="hibernate.connection.password">postgres</property>
+		<property name="hibernate.connection.password">postgres95</property>
 
-		<!-- Connection Pool properties: (Default size of connection pool is 20 
-			The connection pool is a method of speeding up DB calls. Every time Hibernate 
-			starts up, 20 connections are established to our DB This way, when a session 
-			is created (an operation against our DB), it is much faster than just plain 
-			JDBC -->
+		<!-- Connection Pool properties -->
 		<property name="hibernate.connection.pool_size">10</property>
 
 		<!-- The most important property -->
@@ -45,7 +41,7 @@
 		<!-- Prints out the SQL statments hibernate is executing agaiunst our database -->
 		<property name="hibernate.show_sql">true</property>
 
-<!-- highlight then ctrl + shift + c for multiple lines -->
+		<!-- highlight then ctrl + shift + c for multiple lines -->
 
 		<!-- List of mapping files -->
 		<mapping class="com.revature.models." />
