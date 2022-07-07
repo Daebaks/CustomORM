@@ -44,9 +44,8 @@
 		<!-- highlight then ctrl + shift + c for multiple lines -->
 
 		<!-- List of mapping files -->
-		<mapping class="com.revature.models." />
-		<mapping class="com.revature.models." />
-		<mapping class="com.revature.models." />
+		<mapping class="com.revature.models.Movie" />
+		
 
 	</session-factory>
 </hibernate-configuration>
