@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 
-<!-- DTD stands for Document Type Definition -->
+	<!-- DTD stands for Document Type Definition -->
 
 	<session-factory>
 
@@ -45,7 +45,8 @@
 
 		<!-- List of mapping files -->
 		<mapping class="com.revature.models.Movie" />
-		
-
+		<mapping class="com.revature.models.Ticket" />
+		<mapping class="com.revature.models.Customer" />
+		<mapping class="com.revature.models.Theatre" />
 	</session-factory>
 </hibernate-configuration>
