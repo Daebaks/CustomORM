@@ -30,20 +30,39 @@ public class MovieDAO {
 	
 	public List<Movie> selectAll(){
 		Session s = HibernateUtility.getSession();
-		return s.createQuery("from Movie", Movie.class).list();
+		Transaction tr = s.beginTransaction();
+		List<Movie> movs = s.createQuery("from Movie", Movie.class).list();
+		tr.commit();
+		return movs;
 	}
 	
 	public Movie selectByName(String name) {
 		Session s = HibernateUtility.getSession();
+		Transaction tr = s.beginTransaction();
 		Movie movie = (Movie) s.createQuery("from Movie where name = '" +name+"'", Movie.class);
+		tr.commit();
 		return movie;
 	}
 	
 	public Movie selectById(int id) {
 		Session s = HibernateUtility.getSession();
-		return s.get(Movie.class, id);
+		Transaction tr = s.beginTransaction();
+		Movie mov = (Movie) s.get(Movie.class, id);
+		tr.commit();
+		return mov;
 	}
 	
+	public void deleteById(int id) {
+		Session s = HibernateUtility.getSession();
+		Transaction tr = s.beginTransaction();
+		Movie movie = (Movie)s.load(Movie.class,id);
+		s.delete(movie);
+		tr.commit();
+	}
+	
+	public void update(Movie movie) {
+		//
+	}
 	
 	
 	
