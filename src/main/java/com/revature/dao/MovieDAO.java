@@ -61,7 +61,11 @@ public class MovieDAO {
 	}
 	
 	public void update(Movie movie) {
-		//
+//		Session s = HibernateUtility.getSession();
+//		Transaction tr = s.beginTransaction();
+//		
+//		s.update(movie);
+//		tr.commit();
 	}
 	
 	
