@@ -1,4 +1,4 @@
-package com.revature.connections;
+package com.revature.configs;
 
 public class SessionUtil {
 
