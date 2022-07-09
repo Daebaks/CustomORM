@@ -8,7 +8,6 @@ public class FkField {
 private Field field;
 	
 	public FkField(Field field) {
-		// Let's check the field to ensure it has the column annotation that we're expection
 		
 		if(field.getAnnotation(FkRelation.class) == null) {
 			throw new IllegalStateException("Cannot create ForeignKeyField object! Provided field: "
@@ -28,7 +27,6 @@ private Field field;
 		return field.getType();
 	}
 	
-	// Let's add one final method to extract the column so we can utilize if we're building sql tables
 	public String getColumnName() {
 		return field.getAnnotation(FkRelation.class).columnName();
 	}
