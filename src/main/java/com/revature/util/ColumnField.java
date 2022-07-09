@@ -9,7 +9,7 @@ public class ColumnField {
 	private Field field;
 	
 	public ColumnField(Field field) {
-		// Let's check the field to ensure it has the column annotation that we're expection
+		
 		
 		if(field.getAnnotation(Column.class) == null) {
 			throw new IllegalStateException("Cannot create ColumnField object! Provided field: "
@@ -29,7 +29,7 @@ public class ColumnField {
 		return field.getType();
 	}
 	
-	// Let's add one final method to extract the column so we can utilize if we're building sql tables
+	
 	public String getColumnName() {
 		return field.getAnnotation(Column.class).columnName();
 	}
