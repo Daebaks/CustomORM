@@ -14,7 +14,7 @@ public class ConnectionPooling {
 	
 	static {
         ds.setAutoCommit(false);
-        ds.setMaximumPoolSize(10);
+        ds.setMaximumPoolSize(100);
     }
 	
 	

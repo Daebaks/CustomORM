@@ -18,7 +18,7 @@ public class DbConfig {
 
 	private List<MetaClassModel<Class<?>>> metaClassModelList;
 
-	public void setXmpPath(String path) {
+	public void setXmlPath(String path) {
 		AnnotatedClassesRetriever.getPath(path);
 	}
 
@@ -41,6 +41,7 @@ public class DbConfig {
 		for (MetaClassModel<?> claz : getMetaClassModelList()) {
 			// Creating the DB tables for each class
 			List<ColumnField> columns = claz.getColumns();
+			
 //			*SAMPLE:
 //			----------
 //			CREATE TABLE table_name(
@@ -49,7 +50,7 @@ public class DbConfig {
 //					second_col varchar(50) 	
 //				);
 
-			try (Connection conn = this.getConnection();) {
+			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
 				String sql = "CREATE TABLE " + claz.getSimpleClassName().toString() + " (" + claz.getPrimaryKey().getName().toString()
 						+ " serial PRIMARY KEY, ";
@@ -69,13 +70,11 @@ public class DbConfig {
 					counter++;
 				}
 				sql+=" )";
-				st.execute(sql);
-				System.out.println("DEBUG");
+				st.executeUpdate(sql);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
 
