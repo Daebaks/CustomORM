@@ -18,5 +18,10 @@ public class Pokemon {
 	
 	@Column(columnName = "location_caught")
 	private String locationCaught;
+
+	public Pokemon() {
+		super();
+	}
+	
 	
 }

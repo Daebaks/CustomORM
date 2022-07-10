@@ -1,24 +1,27 @@
 package com.revature.demoapp;
 
-import com.revature.configs.DbConfig;
 import com.revature.demoapp.models.Pokemon;
-import com.revature.util.MetaClassModel;
+import com.revature.helpers.AnnotatedClassesRetriever;
 
 public class Driver {
 public static void main(String[] args) {
 	
+ 
 	
-	DbConfig c = new DbConfig();
+	for(Class<?> c: AnnotatedClassesRetriever.getAnnotatedClassesList() ) {
+		System.out.println(c.getSimpleName());
+	}
 	
-	c.addAnnotatedClass(Pokemon.class);
-	
-	 for(MetaClassModel<?> clas : c.getMetaClassModelList()) {
-		 
-		 System.out.println(clas.getClassName());
-		 System.out.println(clas.getPrimaryKey().getName());
-		 System.out.println(clas.getColumns());
-		 
-	 }
-	
+//	DbConfig c = new DbConfig();
+//	
+//	c.addAnnotatedClass(Pokemon.class);
+//	
+//	 for(MetaClassModel<?> clas : c.getMetaClassModelList()) {
+//		 
+//		 System.out.println(clas.getClassName());
+//		 System.out.println(clas.getPrimaryKey().getName());
+//		 
+//	 }
+//	
 }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classes>
+ <class>com.revature.demoapp.models.Pokemon</class>
+ <class>com.revature.demoapp.models.Compartment</class>
+ <class>com.revature.demoapp.models.Achievement</class>
+</classes>
