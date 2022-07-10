@@ -3,6 +3,8 @@ package com.revature.configs;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool;
@@ -13,8 +15,7 @@ public class ConnectionPooling {
 	private static HikariDataSource ds=new HikariDataSource();
 	
 	static {
-        ds.setAutoCommit(false);
-        ds.setMaximumPoolSize(100);
+        ds.setDriverClassName("org.postgresql.Driver");        
     }
 	
 	

@@ -37,7 +37,7 @@ public class DbConfig {
 	}
 
 	public void buildDb() {
-		System.out.println("BUILDING THE DB...");
+		System.out.println("Building the DB...");
 		for (MetaClassModel<?> claz : getMetaClassModelList()) {
 			// Creating the DB tables for each class
 			List<ColumnField> columns = claz.getColumns();
@@ -71,11 +71,13 @@ public class DbConfig {
 				}
 				sql+=" )";
 				st.executeUpdate(sql);
+				System.out.println("Finished building the DB");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Error while building the DB");
 				e.printStackTrace();
 			}
 		}
+	
 	}
 
 	public void setupConnection(String dbUrl, String dbUsername, String dbPassword) {
