@@ -14,7 +14,8 @@ public class DbHelper {
 	
 	public void createDb() {
 		try(Connection conn = cfg.getConnection()) {
-			
+			//here: SQL DB creation for the current connection
+			//here I will get the annotates classes, make new metaClassModels for them, extract the info, then build the DB
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
