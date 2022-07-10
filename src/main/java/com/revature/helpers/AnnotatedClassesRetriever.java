@@ -42,7 +42,6 @@ public class AnnotatedClassesRetriever {
 		if (node.getNodeType() == Node.ELEMENT_NODE)   
 		{  
 		Element eElement = (Element) node;  
-		System.out.println();
 		Class<?> claz =(Class) Class.forName(((NodeList) eElement).item(0).getTextContent());
 		AnnotatedClassesList.add(claz);
 		}  
