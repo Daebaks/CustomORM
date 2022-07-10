@@ -14,7 +14,7 @@ public class DbHelper {
 	
 	public void createDb() {
 		try(Connection conn = cfg.getConnection()) {
-			
+			//here: SQL DB creation for the current connection
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
