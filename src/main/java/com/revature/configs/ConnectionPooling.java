@@ -3,32 +3,39 @@ package com.revature.configs;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.zaxxer.hikari.HikariConfig;
+
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.pool.HikariPool;
 
 public class ConnectionPooling {
 
-	private static HikariConfig config = new HikariConfig();
-	private static HikariDataSource ds=new HikariDataSource(config);
+//	private static HikariConfig config = new HikariConfig();
+	private static HikariDataSource ds=new HikariDataSource();
+	
+	static {
+        ds.setDriverClassName("org.postgresql.Driver");        
+    }
+	
 	
 	private ConnectionPooling() {}
 	
 	public static void setUrl(String url) {
-		config.setJdbcUrl(url);
+		ds.setJdbcUrl(url);
+		
 	}
 	public static void setUsername(String user) {
-		 config.setUsername(user);
+		ds.setUsername(user);
 	}
 	public static void setPassword(String pass) {
-		 config.setPassword(pass);
+		ds.setPassword(pass);
 	 
 	}
 	public static void setSchema(String schema) {
-		 config.setSchema(schema);
+		ds.setSchema(schema);
 	}
 	
 	public static void closeConn() {
-		 ds.close();
+		ds.close();
 	}
 	
 	public static Connection getConn() throws SQLException {

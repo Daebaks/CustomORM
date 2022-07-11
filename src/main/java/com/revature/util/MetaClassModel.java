@@ -21,7 +21,6 @@ public class MetaClassModel<T> {
 		this.clazz  = clazz;
 		this.columnFields = new LinkedList<>();
 		this.fkFields = new LinkedList<>();
-//		this.pkField = ;
 	}
 
 	public static MetaClassModel<Class<?>> of(Class<?> clazz){
@@ -33,6 +32,7 @@ public class MetaClassModel<T> {
 		
 		return new MetaClassModel<>(clazz);
 	}
+	
 	
 	public List<ColumnField> getColumns(){
 		
@@ -69,7 +69,6 @@ public class MetaClassModel<T> {
 				}
 				return fkFields;
 	}
-	
 	
 	public PkField getPrimaryKey() {
 		Field[] fields = clazz.getDeclaredFields();
