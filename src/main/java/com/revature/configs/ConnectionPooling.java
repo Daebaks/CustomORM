@@ -13,7 +13,7 @@ public class ConnectionPooling {
 	private static HikariDataSource ds=new HikariDataSource();
 	
 	static {
-		ds.setAutoCommit(true);
+		ds.setAutoCommit(false);
 		ds.setConnectionTimeout(30000);
 		ds.setIdleTimeout(600000);
 		ds.setMaxLifetime(1800000);

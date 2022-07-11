@@ -1,12 +1,10 @@
 package com.revature.configs;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 import com.revature.helpers.AnnotatedClassesRetriever;
 import com.revature.util.ColumnField;
 import com.revature.util.MetaClassModel;
