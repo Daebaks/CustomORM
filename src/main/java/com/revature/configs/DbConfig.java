@@ -15,31 +15,27 @@ public class DbConfig {
 
 	
 	private Connection conn;
-
 	private List<MetaClassModel<Class<?>>> metaClassModelList;
 
 	public void setXmlPath(String path) {
 		AnnotatedClassesRetriever.getPath(path);
 	}
-
 	private void addAnnotatedClass(Class annotatedClass) {
 		if (metaClassModelList == null) {
 			metaClassModelList = new LinkedList<>();
 		}
 		metaClassModelList.add(MetaClassModel.of(annotatedClass));
 	}
-
 	private List<MetaClassModel<Class<?>>> getMetaClassModelList() {
 		for (Class<?> claz : AnnotatedClassesRetriever.getAnnotatedClassesList()) {
 			addAnnotatedClass(claz);
 		}
 		return (metaClassModelList == null) ? Collections.emptyList() : metaClassModelList;
 	}
-
 	public void buildDb() {
 		System.out.println("BUILDING THE DB...");
 		for (MetaClassModel<?> claz : getMetaClassModelList()) {
-			// Creating the DB tables for each class
+			// Creating the DB tables (for each class)
 			List<ColumnField> columns = claz.getColumns();
 			
 //			--SAMPLE--:
@@ -71,7 +67,6 @@ public class DbConfig {
 				}
 				sql+=" )";
 				st.executeUpdate(sql);
-				
 			} catch (SQLException e) {
 				System.out.println("Error while building the DB");
 				e.printStackTrace();

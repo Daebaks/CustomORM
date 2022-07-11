@@ -13,11 +13,17 @@ public class ConnectionPooling {
 	private static HikariDataSource ds=new HikariDataSource();
 	
 	static {
+		ds.setAutoCommit(true);
+		ds.setConnectionTimeout(30000);
+		ds.setIdleTimeout(600000);
+		ds.setMaxLifetime(1800000);
         ds.setDriverClassName("org.postgresql.Driver");        
     }
 	
 	
-	private ConnectionPooling() {}
+	private ConnectionPooling() {
+		
+	}
 	
 	public static void setUrl(String url) {
 		ds.setJdbcUrl(url);
@@ -39,7 +45,6 @@ public class ConnectionPooling {
 	}
 	
 	public static Connection getConn() throws SQLException {
-		
 		return ds.getConnection();
 	}
 	
