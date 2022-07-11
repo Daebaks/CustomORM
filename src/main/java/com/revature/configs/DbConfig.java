@@ -37,14 +37,14 @@ public class DbConfig {
 	}
 
 	public void buildDb() {
-		System.out.println("Building the DB...");
+		System.out.println("BUILDING THE DB...");
 		for (MetaClassModel<?> claz : getMetaClassModelList()) {
 			// Creating the DB tables for each class
 			List<ColumnField> columns = claz.getColumns();
 			
-//			*SAMPLE:
-//			----------
-//			CREATE TABLE table_name(
+//			--SAMPLE--:
+//			-------------
+//			CREATE TABLE IF NOT EXISTS table_name(
 //					pk_name serial PRIMARY KEY,
 //					first_col INTEGER ,
 //					second_col varchar(50) 	
@@ -52,7 +52,7 @@ public class DbConfig {
 
 			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
-				String sql = "CREATE TABLE " + claz.getSimpleClassName().toString() + " (" + claz.getPrimaryKey().getName().toString()
+				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getSimpleClassName().toString() + " (" + claz.getPrimaryKey().getName().toString()
 						+ " serial PRIMARY KEY, ";
 
 				int counter = 1;
@@ -71,13 +71,13 @@ public class DbConfig {
 				}
 				sql+=" )";
 				st.executeUpdate(sql);
-				System.out.println("Finished building the DB");
+				
 			} catch (SQLException e) {
 				System.out.println("Error while building the DB");
 				e.printStackTrace();
 			}
 		}
-	
+		System.out.println("DB BUILT SUCCESSFULLY");
 	}
 
 	public void setupConnection(String dbUrl, String dbUsername, String dbPassword) {
