@@ -1,6 +1,7 @@
 package com.revature.demoapp;
 
 import com.revature.configs.DbConfig;
+import com.revature.demoapp.daos.PokemonDAO;
 
 public class Driver{
 
@@ -11,6 +12,9 @@ public static void main(String[] args) {
 		conf.setupConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres95");
 		conf.setSchema("orm");
 		conf.buildDb();
+		
+		
+		
 		 
 }
 }
