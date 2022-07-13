@@ -1,5 +1,6 @@
 package com.revature.util;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import com.revature.annotations.Column;
 import com.revature.annotations.FkRelation;
 import com.revature.annotations.Id;
+import com.revature.annotations.ManyToMany;
 import com.revature.annotations.Table;
  
 public class MetaClassModel<T> {
@@ -15,14 +17,15 @@ public class MetaClassModel<T> {
 	private PkField pkField;
 	private List<ColumnField> columnFields;
 	private List<FkField> fkFields;
-	 
+	private List<ManyToManyField> mTmFields;
 	
 	public MetaClassModel(Class<?> clazz) {
 		this.clazz  = clazz;
 		this.columnFields = new LinkedList<>();
 		this.fkFields = new LinkedList<>();
+		this.mTmFields = new LinkedList<>();
 	}
-
+	
 	public static MetaClassModel<Class<?>> of(Class<?> clazz){
 	
 		if (clazz.getAnnotation(Table.class) == null) {
@@ -36,7 +39,7 @@ public class MetaClassModel<T> {
 	
 	public List<ColumnField> getColumns(){
 		
-		
+		columnFields.clear();
 		Field[] fields = clazz.getDeclaredFields();
 		
 		for (Field field: fields) {
@@ -58,17 +61,38 @@ public class MetaClassModel<T> {
 	public List<FkField> getForeignKeys(){
 	
 				Field[] fields = clazz.getDeclaredFields();
+				fkFields.clear();
 				for (Field field: fields) {
+					
 					FkRelation foreignKey = field.getAnnotation(FkRelation.class);
 					if (foreignKey != null) {
 						fkFields.add(new FkField(field));
 					}
 				}
-				if(fkFields.isEmpty()) {
-					throw new RuntimeException("No foreign keys found in: " + clazz.getName());
-				}
+//				if(fkFields.isEmpty()) {
+//					throw new RuntimeException("No foreign keys found in: " + clazz.getName());
+//				}
+				
 				return fkFields;
 	}
+	
+	public List<ManyToManyField> getMTMfields(){
+		
+		Field[] fields = clazz.getDeclaredFields();
+		mTmFields.clear();
+		for (Field field: fields) {
+			
+			ManyToMany mTm = field.getAnnotation(ManyToMany.class);
+			if (mTm != null) {
+				mTmFields.add(new ManyToManyField(field));
+			}
+		}
+//		if(fkFields.isEmpty()) {
+//			throw new RuntimeException("No foreign keys found in: " + clazz.getName());
+//		}
+		
+		return mTmFields;
+}
 	
 	public PkField getPrimaryKey() {
 		Field[] fields = clazz.getDeclaredFields();
@@ -89,9 +113,19 @@ public class MetaClassModel<T> {
 		return clazz.getName();
 	}
 	
+	public String  getTableNameFromMetaClass() {
+		String t="";
+		 
+		t = clazz.getAnnotation(Table.class).tableName();
+		 
+		return t;
+		
+	}
+	
 	public Class<?> getTheClass() {
 		return clazz;
 	}
+	
 	
 	
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -45,7 +44,6 @@ public class AnnotatedClassesRetriever {
 			try {
 				doc = db.parse(file);
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			doc.getDocumentElement().normalize();
@@ -67,8 +65,6 @@ public class AnnotatedClassesRetriever {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return AnnotatedClassesList;
-
 	}
 }
