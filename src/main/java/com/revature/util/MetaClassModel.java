@@ -118,7 +118,6 @@ public class MetaClassModel<T> {
 		 
 		t = clazz.getAnnotation(Table.class).tableName();
 		 
-		
 		return t;
 		
 	}
