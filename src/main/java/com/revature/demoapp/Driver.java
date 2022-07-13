@@ -2,6 +2,7 @@ package com.revature.demoapp;
 
 import com.revature.configs.DbConfig;
 import com.revature.helpers.Session;
+import com.revature.demoapp.models.Achievement;
 
 public class Driver{
 
@@ -15,6 +16,10 @@ public static void main(String[] args) {
 		
 		//TESTING
 		Session s = new Session();
+		
+		Achievement ach = new Achievement("Killing the monster", "Killed a very string monster who was destroying everything");
+		
+		s.insertToDb(ach);
 		
 				
 		
