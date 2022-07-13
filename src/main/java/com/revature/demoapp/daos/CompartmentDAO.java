@@ -17,13 +17,13 @@ public class CompartmentDAO {
 
 	}
 
-	// select By id
+	
 	public Compartment selectById(int id) {
 
-		// we don't need a transaction since we're just querying data from the db
+		
 		Session ses = HibernateUtil.getSession();
 
-		// session method - we are invoking a simple query to return an object of type SuperPrison with the PK that we specify from the SuperPrison table
+		
 		Compartment cp = ses.get(Compartment.class, id);
 
 		return cp;

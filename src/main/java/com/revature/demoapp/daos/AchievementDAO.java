@@ -7,14 +7,13 @@ public class AchievementDAO {
 	
 	public void insertWIhtoutCasting(Achievement ach) {
 
-		// capture a session
+		
 		Session ses = HibernateUtil.getSession();
 
-		// Transaction is uniquely from HIbernate
+		
 		Transaction tx = ses.beginTransaction();
 
-		// Make sure that you have java 8 set in your properties in Maven
-		// the save() method reutrns the Primary Key
+		
 		ses.save(ach); 
 		tx.commit();
 
@@ -22,18 +21,18 @@ public class AchievementDAO {
 
 	public int insert(Achievement ach) {
 
-		// capture a session
+		
 		Session ses = HibernateUtil.getSession();
 
-		// Transaction is uniquely from HIbernate
+		
 		Transaction tx = ses.beginTransaction();
 
-		// Make sure that you have java 8 set in your properties in Maven
-		int pk = (int) ses.save(ach); // the save() method reutrns the Primary Key
+		
+		int pk = (int) ses.save(ach);
 
 		tx.commit();
 
-		return pk; // we return the generate Primary Key that DB provides for us
+		return pk; 
 	}
 
 }
