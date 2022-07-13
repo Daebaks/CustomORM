@@ -1,6 +1,7 @@
 package com.revature.demoapp.daos;
 
 import java.util.List;
+import com.revature.helpers.Session;
 
 import com.revature.demoapp.models.Pokemon;
 

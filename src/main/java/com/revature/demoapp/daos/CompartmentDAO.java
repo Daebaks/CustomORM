@@ -1,6 +1,7 @@
 package com.revature.demoapp.daos;
 
 import com.revature.demoapp.models.Compartment;
+import com.revature.helpers.Session;
 
 public class CompartmentDAO {
 	
