@@ -1,14 +1,11 @@
 package com.revature.demoapp.daos;
 
-
-
 public class PokemonDAO {
 
-	
-	//for testing
+	// for testing
 	public int insert() {
-		//for the inserting a pokemon. Needs insertInDb() from session.
+		// for the inserting a pokemon. Needs insertInDb() from session.
 		return -1;
 	}
-	
+
 }
