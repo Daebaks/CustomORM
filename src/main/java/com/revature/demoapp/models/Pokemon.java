@@ -1,18 +1,24 @@
 package com.revature.demoapp.models;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.revature.annotations.Column;
+import com.revature.annotations.FkRelation;
 import com.revature.annotations.Id;
+import com.revature.annotations.ManyToMany;
 import com.revature.annotations.Table;
 
-@Table(tableName = "pokemons")
+@Table(tableName = "pokemon")
 public class Pokemon {
  
-	@Id(columnName = "pokemon_id")
+	@Id(columnName = "pokemonid")
 	private int pokemonId;
 	
-	@Column(columnName = "power")
+	@Column(columnName = "pokemon_name")
+	private String pokemonName;
+	
+	@Column(columnName = "pokemon_power")
 	private String power;
 	
 	@Column(columnName = "reward_points")
@@ -21,6 +27,13 @@ public class Pokemon {
 	@Column(columnName = "location_caught")
 	private String locationCaught;
 
+	//ManyToOne
+	@FkRelation(columnName = "compart_fk", referencesTo = "compartmentid", tableNameRefTo = "compartment")
+	private Compartment compFK;
+	
+	@ManyToMany(fkFrom = "pokemonid", fkTo = "achievementid", tableMappedFrom = "pokemon", tableMappedTo = "achievement")
+	private List<Achievement> achievList;
+	
 	public Pokemon() {
 		super();
 	}

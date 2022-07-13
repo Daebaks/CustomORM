@@ -11,7 +11,7 @@ private Field field;
 		
 		if(field.getAnnotation(FkRelation.class) == null) {
 			throw new IllegalStateException("Cannot create ForeignKeyField object! Provided field: "
-					+ getName() + "is not annotated with @JoinColumn");
+					+ getName() + "is not annotated with @FkRelation");
 		}
 		
 		this.field = field;
@@ -29,5 +29,11 @@ private Field field;
 	
 	public String getColumnName() {
 		return field.getAnnotation(FkRelation.class).columnName();
+	}
+	public String getReferencesTo() {
+		return field.getAnnotation(FkRelation.class).referencesTo();
+	}
+	public String getTabeleNameRefTo() {
+		return field.getAnnotation(FkRelation.class).tableNameRefTo();
 	}
 }

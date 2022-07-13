@@ -1,13 +1,14 @@
 package com.revature.demoapp.models;
 
 import com.revature.annotations.Column;
+import com.revature.annotations.FkRelation;
 import com.revature.annotations.Id;
 import com.revature.annotations.Table;
 
-@Table(tableName = "achievements")
+@Table(tableName = "achievement")
 public class Achievement {
 
-	@Id(columnName = "achievement_id")
+	@Id(columnName = "achievementid")
 	private int achievementId;
 	
 	@Column(columnName = "achievement_name")
@@ -15,6 +16,7 @@ public class Achievement {
 	
 	@Column(columnName = "achievement_desc")
 	private String achievementDescription;
+	
 	
 	public Achievement() {
 		super();

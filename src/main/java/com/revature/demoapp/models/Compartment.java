@@ -1,13 +1,18 @@
 package com.revature.demoapp.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import com.revature.annotations.Column;
+import com.revature.annotations.FkRelation;
 import com.revature.annotations.Id;
 import com.revature.annotations.Table;
 
-@Table(tableName = "compartments")
+@Table(tableName = "compartment")
 public class Compartment {
 
-	@Id(columnName = "compartment_id")
+	@Id(columnName = "compartmentid")
 	private int compartmentId;
 	
 	@Column(columnName = "compartment_name")
@@ -18,6 +23,9 @@ public class Compartment {
 	
 	@Column(columnName = "compartment_capacity")
 	private int compartmentCapacity;
+	
+	//OneToMany
+	private List<Pokemon> pokList = new ArrayList<Pokemon>();
 	
 	public Compartment() {
 		super();
