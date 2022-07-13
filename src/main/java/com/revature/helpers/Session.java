@@ -2,10 +2,13 @@ package com.revature.helpers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.revature.configs.DbConfig;
+import com.revature.util.ColumnField;
+import com.revature.util.FkField;
 import com.revature.util.MetaClassModel;
 
 public class Session<T> {
@@ -16,20 +19,29 @@ public class Session<T> {
 
 		//Extracting the metaClassModel from the object.
 		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
-		
+		System.out.println(theClass.getTableName());
 		//Getting the values from the given obj
-		List<Object>  values = new LinkedList<>();
+		//List<Object>  values = new LinkedList<>();
 		
+		//Getting to know the obj
+		List<ColumnField> columns = theClass.getColumns();
+		List<FkField> foreignFieldsColumns = theClass.getForeignKeys();
 		
+		//Building the sql string
+		StringBuilder sql = new StringBuilder();
 		
-		try (Connection conn = d.getConnection()) {
-			// here, inserting an obj into a row implementation. Returns the PK identifier
-			// value for the inserted obj for the ORM
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		if(!columns.isEmpty()) {
+//			for()
+//		}
+		
+//		try (Connection conn = d.getConnection()) {
+//			// here, inserting an obj into a row implementation. Returns the PK identifier
+//			// value for the inserted obj for the ORM
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		return -1;
 

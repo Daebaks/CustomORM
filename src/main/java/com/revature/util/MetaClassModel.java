@@ -112,9 +112,17 @@ public class MetaClassModel<T> {
 		return clazz.getName();
 	}
 	
+	public String getTableName() {
+		
+		
+	return	clazz.getTypeName();
+		
+	}
+	
 	public Class<?> getTheClass() {
 		return clazz;
 	}
+	
 	
 	
 }
