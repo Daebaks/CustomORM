@@ -113,9 +113,14 @@ public class MetaClassModel<T> {
 		return clazz.getName();
 	}
 	
-	public Annotation[]   getTableName() {
+	public String  getTableNameFromMetaClass() {
+		String t="";
+		 
+		t = clazz.getAnnotation(Table.class).tableName();
+		 
 		
-		return clazz.getDeclaredAnnotations();
+		return t;
+		
 	}
 	
 	public Class<?> getTheClass() {

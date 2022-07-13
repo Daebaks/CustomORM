@@ -49,7 +49,7 @@ public class DbConfig {
 			int counter = 1;
 			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
-				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getSimpleClassName().toString() + " ("
+				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getTableNameFromMetaClass() + " ("
 						+ claz.getPrimaryKey().getName().toString() + " serial PRIMARY KEY, ";
 				for (ColumnField cf : columns) {
 					sql += cf.getColumnName().toString() + " ";

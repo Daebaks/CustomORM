@@ -1,5 +1,6 @@
 package com.revature.helpers;
 
+import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ public class Session<T> {
 
 		//Extracting the metaClassModel from the object.
 		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
-		System.out.println(theClass.getTableName());
+		System.out.println(theClass.getTableNameFromMetaClass());
+//		for (Annotation annotation : theClass.getClass().getAnnotations()) {
+//			System.out.println(annotation.annotationType());
+//		}
 		//Getting the values from the given obj
 		//List<Object>  values = new LinkedList<>();
 		
