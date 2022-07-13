@@ -1,7 +1,7 @@
 package com.revature.demoapp;
 
 import com.revature.configs.DbConfig;
-import com.revature.demoapp.daos.PokemonDAO;
+import com.revature.helpers.Session;
 
 public class Driver{
 
@@ -13,8 +13,11 @@ public static void main(String[] args) {
 		conf.setSchema("orm");
 		conf.buildDb();
 		
+		//TESTING
+		Session s = new Session();
 		
+				
 		
-		 
+		//TESTING
 }
 }
