@@ -71,13 +71,13 @@ public class DbConfig {
 						sql += fkf.getColumnName().toString() + " ";
 						// extracting SQL types
 						if (fkf.getType().getTypeName().toString().equalsIgnoreCase("java.lang.String")) {
-							sql += "  varchar(200) NOT NULL  REFERENCES    " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  varchar(200)  REFERENCES    " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						} else if (fkf.getType().getTypeName().toString().equalsIgnoreCase("int")) {
-							sql += "  integer NOT NULL   REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  integer  REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						} else {
-							sql += "  integer NOT NULL   REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  integer  REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						}
 						if (counter < (columns.size() + foreignFieldsColumns.size())) {

@@ -1,5 +1,8 @@
 package com.revature.demoapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.revature.configs.DbConfig;
 import com.revature.demoapp.models.Achievement;
 import com.revature.demoapp.models.Compartment;
@@ -18,9 +21,13 @@ public class Driver {
 
 		// TESTING
 		Session s = new Session();
-		Achievement ach = new Achievement("Killing the monster",
-				"Killed a very huge monster who was destroying the city at the time");
-		s.insertToDb(ach);
+		Achievement ach = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city at the time");
+		List<Achievement> achlist = new ArrayList<Achievement>();
+		achlist.add(ach);
+		Compartment comp = new Compartment("naming", "in somewhere", 1000);
+		Pokemon pok = new Pokemon("bryan", "powerrr",1234,"VT",comp, achlist );
+		
+//		s.insertToDb();
 		// TESTING
 	}
 }
