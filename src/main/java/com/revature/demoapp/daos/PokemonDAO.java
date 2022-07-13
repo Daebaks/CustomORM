@@ -26,7 +26,7 @@ public class PokemonDAO {
 		Session ses = HibernateUtil.getSession();
 
 		
-		List<Pokemon> pokeList = ses.createQuery("from Pokemon", Pokemon.class).list();
+		List<Pokemon> pokeList = ses.readFromDb("from Pokemon", Pokemon.class).list();
 		
 
 		return pokeList;
