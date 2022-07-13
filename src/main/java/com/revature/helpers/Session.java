@@ -2,14 +2,26 @@ package com.revature.helpers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import com.revature.configs.DbConfig;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Session {
+import com.revature.configs.DbConfig;
+import com.revature.util.MetaClassModel;
+
+public class Session<T> {
 
 	DbConfig d = new DbConfig();
 
 	public int insertToDb(Object obj) {
 
+		//Extracting the metaClassModel from the object.
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
+		
+		//Getting the values from the given obj
+		List<Object>  values = new LinkedList<>();
+		
+		
+		
 		try (Connection conn = d.getConnection()) {
 			// here, inserting an obj into a row implementation. Returns the PK identifier
 			// value for the inserted obj for the ORM

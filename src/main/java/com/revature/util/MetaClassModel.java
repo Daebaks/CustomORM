@@ -24,7 +24,7 @@ public class MetaClassModel<T> {
 		this.fkFields = new LinkedList<>();
 		this.mTmFields = new LinkedList<>();
 	}
-
+	
 	public static MetaClassModel<Class<?>> of(Class<?> clazz){
 	
 		if (clazz.getAnnotation(Table.class) == null) {
