@@ -25,14 +25,39 @@ public class Session {
 	}
 
 	public void deleteFromDb(Object obj) {
-
+		
+		try (Connection conn = d.getConnection()) {
+			// here, deleting an obj from a row implementation.
+			// return a confirmation message
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(obj + " Deleted from the DB");
 	}
 
 	public void updateInDb(Object obj) {
-
+		
+		try (Connection conn = d.getConnection()) {
+			// here, updating an existing obj into a row implementation.
+			// return a confirmation message
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(obj + " Updated in DB");
+		// return updated record
 	}
 
 	public void readFromDb(Object obj) {
+		
+		try (Connection conn = d.getConnection()) {
+			// here, Reading an obj row implementation.
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
