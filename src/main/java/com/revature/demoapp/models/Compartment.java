@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import com.revature.annotations.Column;
-import com.revature.annotations.FkRelation;
 import com.revature.annotations.Id;
 import com.revature.annotations.Table;
 

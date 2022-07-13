@@ -12,8 +12,5 @@ public static void main(String[] args) {
 		conf.setSchema("orm");
 		conf.buildDb();
  
-		
-		
-		 
 }
 }

@@ -2,14 +2,10 @@ package com.revature.configs;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-
 import com.zaxxer.hikari.HikariDataSource;
-import com.zaxxer.hikari.pool.HikariPool;
 
 public class ConnectionPooling {
 
-//	private static HikariConfig config = new HikariConfig();
 	private static HikariDataSource ds=new HikariDataSource();
 	
 	static {
@@ -19,8 +15,7 @@ public class ConnectionPooling {
 //		ds.setMaxLifetime(1800000);
         ds.setDriverClassName("org.postgresql.Driver");        
     }
-	
-	
+		
 	private ConnectionPooling() {
 		
 	}
@@ -47,7 +42,5 @@ public class ConnectionPooling {
 	public static Connection getConn() throws SQLException {
 		return ds.getConnection();
 	}
-	
-	
 	
 }

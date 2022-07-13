@@ -46,28 +46,11 @@ public class DbConfig {
 				foreignFieldsColumns = new ArrayList<>();
 				foreignFieldsColumns = claz.getForeignKeys();
 			}
-
-//			System.out.println("==CLASS "+c);
-//			System.out.println("=====COL====");
-//			System.out.println(columns);
-//			System.out.println("=============");
-//			
-//			System.out.println("===FK==");
-//			System.out.println(foreignFieldsColumns);
-//			System.out.println("=============");
-//
-//
-//			System.out.println("====MtM=====");
-////			System.out.println(mTomFields);
-//			System.out.println("=============");
-
 			int counter = 1;
-
 			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
 				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getSimpleClassName().toString() + " ("
 						+ claz.getPrimaryKey().getName().toString() + " serial PRIMARY KEY, ";
-
 				for (ColumnField cf : columns) {
 					sql += cf.getColumnName().toString() + " ";
 					// extracting SQL types
@@ -102,12 +85,9 @@ public class DbConfig {
 						}
 						counter++;
 					}
-
 				}
 				sql += " ); ";
-
 				st.executeUpdate(sql);
-
 			} catch (SQLException e) {
 				System.out.println("Error while building the DB");
 				e.printStackTrace();
@@ -124,14 +104,8 @@ public class DbConfig {
 			if (!claz.getMTMfields().isEmpty()) {
 				mTomFields = new ArrayList<>();
 				mTomFields = claz.getMTMfields();
-			
- 			 
- 				
-				
-			
 			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
-				
 				String sql="";
 				for (ManyToManyField mtm : mTomFields) {
 					 sql+="CREATE TABLE IF NOT EXISTS  "+ mtm.getTableMappedFrom()+"_"+mtm.getTableMappedTo()+"_junction (  " ;
@@ -143,8 +117,7 @@ public class DbConfig {
 				System.out.println("Error while building JT");
 				e.printStackTrace();
 			}
-		}
-	 
+		}	 
 	}
 }
 

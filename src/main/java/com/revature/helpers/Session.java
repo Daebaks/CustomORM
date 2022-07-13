@@ -2,7 +2,6 @@ package com.revature.helpers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import com.revature.configs.DbConfig;
 
 public class Session {
