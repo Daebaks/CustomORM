@@ -10,9 +10,10 @@ public class ConnectionPooling {
 	
 	static {
 //		ds.setAutoCommit(false);
-//		ds.setConnectionTimeout(30000);
+		ds.setConnectionTimeout(3000000);
 //		ds.setIdleTimeout(600000);
 //		ds.setMaxLifetime(1800000);
+		 
         ds.setDriverClassName("org.postgresql.Driver");        
     }
 		
