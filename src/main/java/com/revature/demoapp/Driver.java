@@ -19,28 +19,67 @@ public class Driver {
 		conf.setSchema("orm");
 		conf.buildDb();
 
-		// TESTING
+		// TESTING//
 		Session s = new Session();
 		
-        //nsertion
-		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city at the time");
-		List<Achievement> achlist = new ArrayList<Achievement>();
-		achlist.add(ach1);
-		
-		Compartment comp = new Compartment("naming", "in somewhere", 1000);
-		Pokemon pok = new Pokemon("well, its the name", "powerrr",1234,"VT",comp, achlist );
-		
-		//s.insertToDb(pok);
-		Pokemon pokToDelete = new Pokemon();
-		pokToDelete.setPokemonId(30);
 		
 		
-		//reading
-		Compartment cread = new Compartment();
-		cread.setCompartmentId(1);
-		Achievement achToRead = new Achievement();
-		achToRead.setAchievementId(1);
-		s.readFromDb(cread);
+        /*insertion*/
+//		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
+//		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
+//		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
+//		
+//		List<Achievement> achlist = new ArrayList<Achievement>();
+//		achlist.add(ach1);
+//		achlist.add(ach2);
+//		achlist.add(ach3);
+		
+		/*insert 3 achievements*/
+//		for(Achievement a : achlist) {
+//			s.insertToDb(a);
+//		}
+		
+		
+//		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
+		
+		/*insert 1 compartment returning the generated ID*/
+//		System.out.println(s.insertToDb(comp));
+		
+		
+//		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
+		
+		/*insert 1 pokemon*/
+//       s.insertToDb(pok1);
+         
+//         Pokemon pok2 = new Pokemon("Poki2", "Beautiful",1200,"Nice land",comp, achlist );
+         
+ 		/*insert 2nd pokemon*/
+//      s.insertToDb(pok2);
+         
+          
+          
+          
+          
+          
+         /*Deleting*/
+//		Pokemon pokToDelete = new Pokemon();
+// 		pokToDelete.setPokemonId();
+//		s.deleteFromDb(pokToDelete);
+
+//		Achievement achToDelete = new Achievement();
+//		achToDelete.setAchievementId();
+//		s.deleteFromDb(achToDelete);
+
+		
+		
+		/*reading*/
+//		Compartment cToRead = new Compartment();
+//		cToRead.setCompartmentId();
+//		s.readFromDb(cToRead);
+		
+//		Achievement achToRead = new Achievement();
+//		achToRead.setAchievementId();
+//		s.readFromDb(achToRead);
 		
 	}
 }
