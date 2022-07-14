@@ -21,16 +21,26 @@ public class Driver {
 
 		// TESTING
 		Session s = new Session();
-		Achievement ach = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city at the time");
+		
+        //nsertion
+		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city at the time");
 		List<Achievement> achlist = new ArrayList<Achievement>();
-		achlist.add(ach);
+		achlist.add(ach1);
+		
 		Compartment comp = new Compartment("naming", "in somewhere", 1000);
 		Pokemon pok = new Pokemon("well, its the name", "powerrr",1234,"VT",comp, achlist );
 		
 		//s.insertToDb(pok);
 		Pokemon pokToDelete = new Pokemon();
-		pokToDelete.setPokemonId(16);
-		s.deleteFromDb(pokToDelete);
-		// TESTING
+		pokToDelete.setPokemonId(30);
+		
+		
+		//reading
+		Compartment cread = new Compartment();
+		cread.setCompartmentId(1);
+		Achievement achToRead = new Achievement();
+		achToRead.setAchievementId(1);
+		s.readFromDb(cread);
+		
 	}
 }

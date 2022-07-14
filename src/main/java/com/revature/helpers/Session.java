@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,10 +114,7 @@ public class Session<T> {
 										sql_sb.append(" , ");
 									}
 								}
-								
-							 
-					 }
-					 
+						 }
 			}
 		}
 		try (Connection conn = d.getConnection()) {
@@ -198,10 +196,64 @@ public class Session<T> {
 	}
 
 	public void updateInDb(Object obj) {
-
+		//Update
 	}
 
 	public void readFromDb(Object obj) {
-
+		// Extracting the metaClassModel from the object.
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		PkField objPkField = theClass.getPrimaryKey();
+		
+		int PKValue = 0 ;
+		
+		//This is the object PK Field Name
+		String PKFieldName = objPkField.getName();
+		
+		try {
+			Field valF = clays.getDeclaredField(objPkField.getName());
+			valF.setAccessible(true);
+			//Getting the object PK value
+			PKValue = (int) valF.get(obj);
+		} catch (NoSuchFieldException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Building the sql string before loading PK for deletion;
+		StringBuilder sql_sb = new StringBuilder();
+		sql_sb.append("SELECT * FROM " + tableName + " WHERE "+ PKFieldName +" = "+PKValue+";");
+		try (Connection conn = d.getConnection()) {
+			
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			
+			ResultSet rs = st.executeQuery();
+			
+			ResultSetMetaData rsmd = rs.getMetaData();
+			
+			int columnsNumber = rsmd.getColumnCount();
+			while (rs.next()) {
+			    for (int i = 1; i <= columnsNumber; i++) {
+			        if (i > 1) System.out.print(",  ");
+			        String columnValue = rs.getObject(i).toString();
+			        System.out.print( rsmd.getColumnName(i)+ " || " +columnValue );
+			    }
+			    System.out.println(" ");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
