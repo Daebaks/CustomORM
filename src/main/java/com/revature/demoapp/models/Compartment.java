@@ -40,6 +40,15 @@ public class Compartment {
 		this.pokList = pokList;
 	}
 
+
+	public Compartment(String compartmentName, String compartmentLocation, int compartmentCapacity) {
+		super();
+		this.compartmentName = compartmentName;
+		this.compartmentLocation = compartmentLocation;
+		this.compartmentCapacity = compartmentCapacity;
+	}
+
+
 	public int getCompartmentId() {
 		return compartmentId;
 	}
@@ -80,12 +89,6 @@ public class Compartment {
 		this.pokList = pokList;
 	}
 
-	@Override
-	public String toString() {
-		return "Compartment [compartmentId=" + compartmentId + ", compartmentName=" + compartmentName
-				+ ", compartmentLocation=" + compartmentLocation + ", compartmentCapacity=" + compartmentCapacity
-				+ ", pokList=" + pokList + "]";
-	}
 
 	@Override
 	public int hashCode() {
@@ -105,7 +108,14 @@ public class Compartment {
 				&& Objects.equals(compartmentLocation, other.compartmentLocation)
 				&& Objects.equals(compartmentName, other.compartmentName) && Objects.equals(pokList, other.pokList);
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "Compartment [compartmentId=" + compartmentId + ", compartmentName=" + compartmentName
+				+ ", compartmentLocation=" + compartmentLocation + ", compartmentCapacity=" + compartmentCapacity + "]";
+	}
+
 	
 	
 	

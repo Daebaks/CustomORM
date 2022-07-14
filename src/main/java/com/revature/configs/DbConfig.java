@@ -49,7 +49,7 @@ public class DbConfig {
 			int counter = 1;
 			try (Connection conn = this.getConnection()) {
 				Statement st = conn.createStatement();
-				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getSimpleClassName().toString() + " ("
+				String sql = "CREATE TABLE IF NOT EXISTS " + claz.getTableNameFromMetaClass() + " ("
 						+ claz.getPrimaryKey().getName().toString() + " serial PRIMARY KEY, ";
 				for (ColumnField cf : columns) {
 					sql += cf.getColumnName().toString() + " ";
@@ -71,13 +71,13 @@ public class DbConfig {
 						sql += fkf.getColumnName().toString() + " ";
 						// extracting SQL types
 						if (fkf.getType().getTypeName().toString().equalsIgnoreCase("java.lang.String")) {
-							sql += "  varchar(200) NOT NULL  REFERENCES    " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  varchar(200)  REFERENCES    " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						} else if (fkf.getType().getTypeName().toString().equalsIgnoreCase("int")) {
-							sql += "  integer NOT NULL   REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  integer  REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						} else {
-							sql += "  integer NOT NULL   REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
+							sql += "  integer  REFERENCES   " + fkf.getTabeleNameRefTo() + " ("
 									+ fkf.getReferencesTo() + ") ";
 						}
 						if (counter < (columns.size() + foreignFieldsColumns.size())) {

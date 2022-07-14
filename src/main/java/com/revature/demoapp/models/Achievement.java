@@ -95,7 +95,4 @@ public class Achievement {
 		this.achievementDescription = achievementDescription;
 	}
 	
-	
-	
-	
 }

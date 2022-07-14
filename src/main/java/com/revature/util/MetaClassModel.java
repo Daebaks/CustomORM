@@ -1,5 +1,6 @@
 package com.revature.util;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,9 +113,19 @@ public class MetaClassModel<T> {
 		return clazz.getName();
 	}
 	
+	public String  getTableNameFromMetaClass() {
+		String t="";
+		 
+		t = clazz.getAnnotation(Table.class).tableName();
+		 
+		return t;
+		
+	}
+	
 	public Class<?> getTheClass() {
 		return clazz;
 	}
+	
 	
 	
 }
