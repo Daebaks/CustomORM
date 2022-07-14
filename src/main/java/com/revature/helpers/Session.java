@@ -57,11 +57,11 @@ public class Session<T> {
 			}
 			// filling types.
 			types.add((T) columns.get(i).getType());
-			if (i+1 == columns.size()) {
+			if (i + 1 == columns.size()) {
 				sql_sb.append(" ) Values ( ");
 				for (int k = 0; k < columns.size(); k++) {
 					sql_sb.append(" ? ");
-					if (k+1 == columns.size()) {
+					if (k + 1 == columns.size()) {
 						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
 					} else {
 						sql_sb.append(" , ");
@@ -77,13 +77,12 @@ public class Session<T> {
 			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
 			for (int i = 0; i < types.size(); i++) {
 				if (types.get(i).toString().equalsIgnoreCase("int")) {
-					st.setInt(i+1, (int) values.get(i));
-					
+					st.setInt(i + 1, (int) values.get(i));
+
 				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
-					st.setString(i+1 , values.get(i).toString());
-				} 
-				else {
-					st.setInt(i+1 , (int) values.get(i));
+					st.setString(i + 1, values.get(i).toString());
+				} else {
+					st.setInt(i + 1, (int) values.get(i));
 				}
 			}
 			ResultSet rs;
@@ -95,20 +94,252 @@ public class Session<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
+
 		return returnedId;
 
 	}
 
 	public void deleteFromDb(Object obj) {
+		// Extracting the metaClassModel from the object.
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
 
+		// returned value
+		int returnedId = -1;
+
+		// Getting the values/types from the given obj
+		List<T> values = new ArrayList<>();
+		List<T> types = new ArrayList<>();
+
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		List<ColumnField> columns = theClass.getColumns();
+		List<FkField> foreignFieldsColumns = theClass.getForeignKeys();
+
+		// Building the sql string before loading values;
+		StringBuilder sql_sb = new StringBuilder();
+		sql_sb.append("DELETE FROM " + tableName + " ( ");
+		for (int i = 0; i < columns.size(); i++) {
+			sql_sb.append(columns.get(i).getColumnName() + " ");
+			try {
+				Field valF = clays.getDeclaredField(columns.get(i).getName());
+				// filling values.
+				valF.setAccessible(true);
+				values.add((T) valF.get(obj));
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// filling types.
+			types.add((T) columns.get(i).getType());
+			if (i + 1 == columns.size()) {
+				sql_sb.append(" ) Values ( ");
+				for (int k = 0; k < columns.size(); k++) {
+					sql_sb.append(" ? ");
+					if (k + 1 == columns.size()) {
+						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
+					} else {
+						sql_sb.append(" , ");
+					}
+				}
+			} else {
+				sql_sb.append(" , ");
+			}
+		}
+
+		try (Connection conn = d.getConnection()) {
+			// here, deleting an obj from a row implementation. Returns the PK identifier
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			for (int i = 0; i < types.size(); i++) {
+				if (types.get(i).toString().equalsIgnoreCase("int")) {
+					st.setInt(i + 1, (int) values.get(i));
+
+				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
+					st.setString(i + 1, values.get(i).toString());
+				} else {
+					st.setInt(i + 1, (int) values.get(i));
+				}
+			}
+			ResultSet rs;
+			if (!(rs = st.executeQuery()).equals(null)) {
+				rs.next();
+				returnedId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return returnedId;
 	}
 
-	public void updateInDb(Object obj) {
+	public int updateInDb(Object obj) {
+		// Extracting the metaClassModel from the object.
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
 
+		// returned value
+		int returnedId = -1;
+
+		// Getting the values/types from the given obj
+		List<T> values = new ArrayList<>();
+		List<T> types = new ArrayList<>();
+
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		List<ColumnField> columns = theClass.getColumns();
+		List<FkField> foreignFieldsColumns = theClass.getForeignKeys();
+
+		// Building the sql string before loading values;
+		StringBuilder sql_sb = new StringBuilder();
+		sql_sb.append("UPDATE " + tableName + " SET ( ");
+		for (int i = 0; i < columns.size(); i++) {
+			sql_sb.append(columns.get(i).getColumnName() + " ");
+			try {
+				Field valF = clays.getDeclaredField(columns.get(i).getName());
+				// filling values.
+				valF.setAccessible(true);
+				values.add((T) valF.get(obj));
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// filling types.
+			types.add((T) columns.get(i).getType());
+			if (i + 1 == columns.size()) {
+				sql_sb.append(" ) Values ( ");
+				for (int k = 0; k < columns.size(); k++) {
+					sql_sb.append(" ? ");
+					if (k + 1 == columns.size()) {
+						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
+					} else {
+						sql_sb.append(" , ");
+					}
+				}
+			} else {
+				sql_sb.append(" , ");
+			}
+		}
+
+		try (Connection conn = d.getConnection()) {
+			// here, Updating an existing obj in a row implementation. Returns the PK
+			// identifier
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			for (int i = 0; i < types.size(); i++) {
+				if (types.get(i).toString().equalsIgnoreCase("int")) {
+					st.setInt(i + 1, (int) values.get(i));
+
+				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
+					st.setString(i + 1, values.get(i).toString());
+				} else {
+					st.setInt(i + 1, (int) values.get(i));
+				}
+			}
+			ResultSet rs;
+			if (!(rs = st.executeQuery()).equals(null)) {
+				rs.next();
+				returnedId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return returnedId;
 	}
 
-	public void readFromDb(Object obj) {
+	public int readFromDb(Object obj) {
+		// Extracting the metaClassModel from the object.
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
 
+		// returned value
+		int returnedId = -1;
+
+		// Getting the values/types from the given obj
+		List<T> values = new ArrayList<>();
+		List<T> types = new ArrayList<>();
+
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		List<ColumnField> columns = theClass.getColumns();
+		List<FkField> foreignFieldsColumns = theClass.getForeignKeys();
+
+		// Building the sql string before loading values;
+		StringBuilder sql_sb = new StringBuilder();
+		sql_sb.append("SELECT * FROM " + tableName + " WHERE ( ");
+		for (int i = 0; i < columns.size(); i++) {
+			sql_sb.append(columns.get(i).getColumnName() + " ");
+			try {
+				Field valF = clays.getDeclaredField(columns.get(i).getName());
+				// filling values.
+				valF.setAccessible(true);
+				values.add((T) valF.get(obj));
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// filling types.
+			types.add((T) columns.get(i).getType());
+			if (i + 1 == columns.size()) {
+				sql_sb.append(" ) Values ( ");
+				for (int k = 0; k < columns.size(); k++) {
+					sql_sb.append(" ? ");
+					if (k + 1 == columns.size()) {
+						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
+					} else {
+						sql_sb.append(" , ");
+					}
+				}
+			} else {
+				sql_sb.append(" , ");
+			}
+		}
+
+		try (Connection conn = d.getConnection()) {
+			// here, Selecting an obj r implementation. Returns the PK identifier
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			for (int i = 0; i < types.size(); i++) {
+				if (types.get(i).toString().equalsIgnoreCase("int")) {
+					st.setInt(i + 1, (int) values.get(i));
+
+				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
+					st.setString(i + 1, values.get(i).toString());
+				} else {
+					st.setInt(i + 1, (int) values.get(i));
+				}
+			}
+			ResultSet rs;
+			if (!(rs = st.executeQuery()).equals(null)) {
+				rs.next();
+				returnedId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return returnedId;
 	}
 }
