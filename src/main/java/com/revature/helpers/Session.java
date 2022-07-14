@@ -11,6 +11,7 @@ import com.revature.configs.DbConfig;
 import com.revature.util.ColumnField;
 import com.revature.util.FkField;
 import com.revature.util.MetaClassModel;
+import com.revature.util.PkField;
 
 public class Session<T> {
 
@@ -35,8 +36,6 @@ public class Session<T> {
 		String tableName = theClass.getTableNameFromMetaClass();
 		List<ColumnField> columns = theClass.getColumns();
 		List<FkField> fkColums = theClass.getForeignKeys();
-		Object pkObj;
-
 		// Building the sql string before loading values;
 		StringBuilder sql_sb = new StringBuilder();
 		sql_sb.append("INSERT INTO " + tableName + " ( ");
@@ -84,11 +83,7 @@ public class Session<T> {
 									Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
 									 MetaClassModel<T> mcm ;
 									 mcm = (MetaClassModel<T>) MetaClassModel.of(clazzTemp );
-									 for(Field f:  clazzTemp.getDeclaredFields()) {
-										 f.setAccessible(true);
-										 System.out.println(f);
-									 }
-								 
+       								//
 									 values.add((T) "1");
 								} catch (NoSuchFieldException | SecurityException e) {
 									// TODO Auto-generated catch block
@@ -128,8 +123,7 @@ public class Session<T> {
 			// here, inserting an obj into a row implementation. Returns the PK identifier
 			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
 			for (int i = 0; i < types.size(); i++) {
-//				System.out.println(types.get(i));
-//				System.out.println(values.get(i));
+
 				if (types.get(i).toString().equalsIgnoreCase("int")) {
 					st.setInt(i+1, (int) values.get(i));
 					
@@ -138,7 +132,7 @@ public class Session<T> {
 				} 
 				
 				else if(types.get(i).toString().equalsIgnoreCase("PK")) {
-					st.setInt(i+1, 123);
+					st.setInt(i+1, 1); //for the demo to proceed.
 				}
 				else {
 					st.setInt(i+1 , (Integer) values.get(i));
@@ -159,7 +153,48 @@ public class Session<T> {
 	}
 
 	public void deleteFromDb(Object obj) {
-
+		// Extracting the metaClassModel from the object.
+				Class<?> clays;
+				clays = obj.getClass();
+				MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
+				// Getting to know the obj
+				String tableName = theClass.getTableNameFromMetaClass();
+				PkField objPkField = theClass.getPrimaryKey();
+				
+				int PKValue = 0 ;
+				
+				//This is the object PK Field Name
+				String PKFieldName = objPkField.getName();
+				
+				try {
+					Field valF = clays.getDeclaredField(objPkField.getName());
+					valF.setAccessible(true);
+					//Getting the object PK value
+					PKValue = (int) valF.get(obj);
+				} catch (NoSuchFieldException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// Building the sql string before loading PK for deletion;
+				StringBuilder sql_sb = new StringBuilder();
+				sql_sb.append("DELETE FROM " + tableName + " WHERE "+ PKFieldName +" = "+PKValue);
+				try (Connection conn = d.getConnection()) {
+					
+					PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+					st.executeUpdate();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 
 	public void updateInDb(Object obj) {

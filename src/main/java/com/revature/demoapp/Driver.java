@@ -27,7 +27,10 @@ public class Driver {
 		Compartment comp = new Compartment("naming", "in somewhere", 1000);
 		Pokemon pok = new Pokemon("well, its the name", "powerrr",1234,"VT",comp, achlist );
 		
-		s.insertToDb(pok);
+		//s.insertToDb(pok);
+		Pokemon pokToDelete = new Pokemon();
+		pokToDelete.setPokemonId(16);
+		s.deleteFromDb(pokToDelete);
 		// TESTING
 	}
 }
