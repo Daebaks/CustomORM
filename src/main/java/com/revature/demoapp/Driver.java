@@ -25,9 +25,9 @@ public class Driver {
 		List<Achievement> achlist = new ArrayList<Achievement>();
 		achlist.add(ach);
 		Compartment comp = new Compartment("naming", "in somewhere", 1000);
-		Pokemon pok = new Pokemon("bryan", "powerrr",1234,"VT",comp, achlist );
+		Pokemon pok = new Pokemon("well, its the name", "powerrr",1234,"VT",comp, achlist );
 		
-//		s.insertToDb();
+		s.insertToDb(pok);
 		// TESTING
 	}
 }

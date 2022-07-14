@@ -28,7 +28,6 @@ private Field field;
 	public Class<?> getType(){
 		return field.getType();
 	}
-	
 	// Let's add one final method to extract the column so we can utilize if we're building sql tables
 	public String getColumnName() {
 		return field.getAnnotation(Id.class).columnName();
