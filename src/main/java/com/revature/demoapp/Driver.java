@@ -25,6 +25,7 @@ public class Driver {
 		
 		
         /*insertion*/
+		/*======================*/
 //		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
 //		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
 //		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
@@ -51,15 +52,14 @@ public class Driver {
          
 //         Pokemon pok2 = new Pokemon("Poki2", "Beautiful",1200,"Nice land",comp, achlist );
          
- 		/*insert 2nd pokemon*/
+ 		/*insert 1 pokemon*/
 //      s.insertToDb(pok2);
          
           
-          
-          
-          
-          
-         /*Deleting*/
+		
+		
+         /*Deletion*/
+		/*======================*/
 //		Pokemon pokToDelete = new Pokemon();
 //		s.deleteFromDb(pokToDelete);
 
@@ -69,13 +69,23 @@ public class Driver {
 
 		
 		
+		
+		
+		
 		/*reading*/
+		/*======================*/
 //		Compartment cToRead = new Compartment();
+//		cToRead.setCompartmentId(1);
 //		s.readFromDb(cToRead);
 		
 //		Achievement achToRead = new Achievement();
 //		achToRead.setAchievementId();
 //		s.readFromDb(achToRead);
+		
+//		Pokemon pokToRead = new Pokemon();
+//		pokToRead.setPokemonId(2);
+//		s.readFromDb(pokToRead);
+		
 		
 	}
 }

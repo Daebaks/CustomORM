@@ -243,12 +243,12 @@ public class Session<T> {
 			
 			int columnsNumber = rsmd.getColumnCount();
 			while (rs.next()) {
+				 System.out.println("\n====== "+rsmd.getTableName(1)+" with ID of "+rs.getObject(1).toString()+" ======");
 			    for (int i = 1; i <= columnsNumber; i++) {
-			        if (i > 1) System.out.print(",  ");
 			        String columnValue = rs.getObject(i).toString();
-			        System.out.print( rsmd.getColumnName(i)+ " || " +columnValue );
+			        System.out.print( rsmd.getColumnName(i)+ " => " +columnValue+"\n" );
 			    }
-			    System.out.println(" ");
+			    System.out.println("===========================================");
 			}
 			
 		} catch (SQLException e) {
