@@ -99,7 +99,7 @@ public class Session<T> {
 
 	}
 
-	public void deleteFromDb(Object obj) {
+	public boolean deleteFromDb(Object obj) {
 		// Extracting the metaClassModel from the object.
 		Class<?> clays;
 		clays = obj.getClass();
@@ -177,7 +177,7 @@ public class Session<T> {
 			e.printStackTrace();
 		}
 
-		return returnedId;
+		return true;
 	}
 
 	public int updateInDb(Object obj) {
