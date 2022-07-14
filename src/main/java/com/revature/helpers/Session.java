@@ -29,11 +29,13 @@ public class Session<T> {
 		// Getting the values/types from the given obj
 		List<T> values = new ArrayList<>();
 		List<T> types = new ArrayList<>();
+		
 
 		// Getting to know the obj
 		String tableName = theClass.getTableNameFromMetaClass();
 		List<ColumnField> columns = theClass.getColumns();
-		List<FkField> foreignFieldsColumns = theClass.getForeignKeys();
+		List<FkField> fkColums = theClass.getForeignKeys();
+		Object pkObj;
 
 		// Building the sql string before loading values;
 		StringBuilder sql_sb = new StringBuilder();
@@ -57,33 +59,89 @@ public class Session<T> {
 			}
 			// filling types.
 			types.add((T) columns.get(i).getType());
-			if (i+1 == columns.size()) {
+			if (i+1 == columns.size() +fkColums.size()) {
 				sql_sb.append(" ) Values ( ");
-				for (int k = 0; k < columns.size(); k++) {
+				
+				for (int k = 0; k < columns.size()+fkColums.size(); k++) {
 					sql_sb.append(" ? ");
-					if (k+1 == columns.size()) {
+					if (k+1 == columns.size()+fkColums.size()) {
 						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
 					} else {
 						sql_sb.append(" , ");
 					}
 				}
+				
 			} else {
-				sql_sb.append(" , ");
+					 sql_sb.append(" , ");
+					 if(i+1==columns.size()) {
+						 for(int x=0; x<fkColums.size(); x++) {
+							 sql_sb.append(fkColums.get(x).getColumnName() + " ");
+							 
+							 try {
+									Field valF = clays.getDeclaredField(fkColums.get(x).getName());
+									// filling values.
+									valF.setAccessible(true);
+									Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
+									 MetaClassModel<T> mcm ;
+									 mcm = (MetaClassModel<T>) MetaClassModel.of(clazzTemp );
+									 for(Field f:  clazzTemp.getDeclaredFields()) {
+										 f.setAccessible(true);
+										 System.out.println(f);
+									 }
+								 
+									 values.add((T) "1");
+								} catch (NoSuchFieldException | SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							// filling types.
+							
+							 types.add((T) "PK");
+							 
+						 }
+								sql_sb.append(" ) Values ( ");
+								
+								for (int k = 0; k < columns.size()+fkColums.size(); k++) {
+									sql_sb.append(" ? ");
+									if (k+1 == columns.size()+fkColums.size()) {
+										sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
+									} else {
+										sql_sb.append(" , ");
+									}
+								}
+								
+							 
+					 }
+					 
 			}
 		}
-
 		try (Connection conn = d.getConnection()) {
 			// here, inserting an obj into a row implementation. Returns the PK identifier
 			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
 			for (int i = 0; i < types.size(); i++) {
+//				System.out.println(types.get(i));
+//				System.out.println(values.get(i));
 				if (types.get(i).toString().equalsIgnoreCase("int")) {
 					st.setInt(i+1, (int) values.get(i));
 					
 				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
 					st.setString(i+1 , values.get(i).toString());
 				} 
+				
+				else if(types.get(i).toString().equalsIgnoreCase("PK")) {
+					st.setInt(i+1, 123);
+				}
 				else {
-					st.setInt(i+1 , (int) values.get(i));
+					st.setInt(i+1 , (Integer) values.get(i));
 				}
 			}
 			ResultSet rs;
