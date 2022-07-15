@@ -26,8 +26,8 @@ public class Driver {
 		
 		
         /*insertion*/
-//		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
-//		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
+//		Achievement ach1 = new Achievement("Defeated pokemon league","Defeated the elite four members and the champion");
+//		Achievement ach2 = new Achievement("Trained","Worked hard and trained all of their effort values");
 //		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
 //		List<Achievement> achlist = new ArrayList<Achievement>();
 //		achlist.add(ach1);
