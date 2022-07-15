@@ -31,7 +31,6 @@ public class Session<T> {
 		// Getting the values/types from the given obj
 		List<T> values = new ArrayList<>();
 		List<T> types = new ArrayList<>();
-		
 
 		// Getting to know the obj
 		String tableName = theClass.getTableNameFromMetaClass();
@@ -59,62 +58,60 @@ public class Session<T> {
 			}
 			// filling types.
 			types.add((T) columns.get(i).getType());
-			if (i+1 == columns.size() +fkColums.size()) {
+			if (i + 1 == columns.size() + fkColums.size()) {
 				sql_sb.append(" ) Values ( ");
-				
-				for (int k = 0; k < columns.size()+fkColums.size(); k++) {
+
+				for (int k = 0; k < columns.size() + fkColums.size(); k++) {
 					sql_sb.append(" ? ");
-					if (k+1 == columns.size()+fkColums.size()) {
+					if (k + 1 == columns.size() + fkColums.size()) {
 						sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
 					} else {
 						sql_sb.append(" , ");
 					}
 				}
-				
+
 			} else {
-					 sql_sb.append(" , ");
-					 if(i+1==columns.size()) {
-						 for(int x=0; x<fkColums.size(); x++) {
-							 sql_sb.append(fkColums.get(x).getColumnName() + " ");
-							 
-							 try {
-									Field valF = clays.getDeclaredField(fkColums.get(x).getName());
-									// filling values.
-									valF.setAccessible(true);
-									Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
-									 MetaClassModel<T> mcm ;
-									 mcm = (MetaClassModel<T>) MetaClassModel.of(clazzTemp );
-       								//
-									 values.add((T) "1");
-								} catch (NoSuchFieldException | SecurityException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IllegalArgumentException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							// filling types.
-							
-							 types.add((T) "PK");
-							 
-						 }
-								sql_sb.append(" ) Values ( ");
-								
-								for (int k = 0; k < columns.size()+fkColums.size(); k++) {
-									sql_sb.append(" ? ");
-									if (k+1 == columns.size()+fkColums.size()) {
-										sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
-									} else {
-										sql_sb.append(" , ");
-									}
-								}
-						 }
+				sql_sb.append(" , ");
+				if (i + 1 == columns.size()) {
+					for (int x = 0; x < fkColums.size(); x++) {
+						sql_sb.append(fkColums.get(x).getColumnName() + " ");
+
+						try {
+							Field valF = clays.getDeclaredField(fkColums.get(x).getName());
+							// filling values.
+							valF.setAccessible(true);
+							Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
+							values.add((T) "1"); // for the foreignKey(PK of relation) this needs to be changed
+													// dynamically
+						} catch (NoSuchFieldException | SecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						// filling types.
+
+						types.add((T) "PK");
+
+					}
+					sql_sb.append(" ) Values ( ");
+
+					for (int k = 0; k < columns.size() + fkColums.size(); k++) {
+						sql_sb.append(" ? ");
+						if (k + 1 == columns.size() + fkColums.size()) {
+							sql_sb.append(" ) RETURNING " + tableName + "." + theClass.getPrimaryKey().getColumnName());
+						} else {
+							sql_sb.append(" , ");
+						}
+					}
+				}
 			}
 		}
 		try (Connection conn = d.getConnection()) {
@@ -123,17 +120,16 @@ public class Session<T> {
 			for (int i = 0; i < types.size(); i++) {
 
 				if (types.get(i).toString().equalsIgnoreCase("int")) {
-					st.setInt(i+1, (int) values.get(i));
-					
+					st.setInt(i + 1, (int) values.get(i));
+
 				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
-					st.setString(i+1 , values.get(i).toString());
-				} 
-				
-				else if(types.get(i).toString().equalsIgnoreCase("PK")) {
-					st.setInt(i+1, 1); //for the demo to proceed.
+					st.setString(i + 1, values.get(i).toString());
 				}
-				else {
-					st.setInt(i+1 , (Integer) values.get(i));
+
+				else if (types.get(i).toString().equalsIgnoreCase("PK")) {
+					st.setInt(i + 1, 1); // for the demo to proceed.
+				} else {
+					st.setInt(i + 1, (Integer) values.get(i));
 				}
 			}
 			ResultSet rs;
@@ -145,58 +141,177 @@ public class Session<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
+
 		return returnedId;
 
 	}
 
 	public void deleteFromDb(Object obj) {
 		// Extracting the metaClassModel from the object.
-				Class<?> clays;
-				clays = obj.getClass();
-				MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
-				// Getting to know the obj
-				String tableName = theClass.getTableNameFromMetaClass();
-				PkField objPkField = theClass.getPrimaryKey();
-				
-				int PKValue = 0 ;
-				
-				//This is the object PK Field Name
-				String PKFieldName = objPkField.getName();
-				
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		PkField objPkField = theClass.getPrimaryKey();
+
+		int PKValue = 0;
+
+		// This is the object PK Field Name
+		String PKFieldName = objPkField.getName();
+
+		try {
+			Field valF = clays.getDeclaredField(objPkField.getName());
+			valF.setAccessible(true);
+			// Getting the object PK value
+			PKValue = (int) valF.get(obj);
+		} catch (NoSuchFieldException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Building the sql string before loading PK for deletion;
+		StringBuilder sql_sb = new StringBuilder();
+		sql_sb.append("DELETE FROM " + tableName + " WHERE " + PKFieldName + " = " + PKValue);
+		try (Connection conn = d.getConnection()) {
+
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void updateInDb(Object obj) {
+
+		// Extracting the metaClassModel from the object.
+		Class<?> clays;
+		clays = obj.getClass();
+		MetaClassModel<Class<?>> theClass = MetaClassModel.of(obj.getClass());
+
+		// Getting the values/types from the given obj
+		List<T> values = new ArrayList<>();
+		int PK_value=0;
+		List<T> types = new ArrayList<>();
+		List<String> allColNames = new ArrayList<>();
+
+		// Getting to know the obj
+		String tableName = theClass.getTableNameFromMetaClass();
+		List<ColumnField> columns = theClass.getColumns();
+		List<FkField> fkColums = theClass.getForeignKeys();
+		PkField thePKofObj = theClass.getPrimaryKey();
+
+		// Building the sql string before loading values/types for the object to update;
+		StringBuilder sql_sb = new StringBuilder();
+
+		// filling the values/types arrays then appending them into the SQL sb
+		for (int i = 0; i < columns.size(); i++) {
+			allColNames.add(columns.get(i).getColumnName().toString());
+			try {
+				Field valF = clays.getDeclaredField(columns.get(i).getName());
+				// filling values.
+				valF.setAccessible(true);
+				values.add((T) valF.get(obj));
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// filling types.
+			types.add((T) columns.get(i).getType());
+		}
+
+		// if there are FKs, then add them
+		if (!fkColums.isEmpty()) {
+			for (int i = 0; i < fkColums.size(); i++) {
+				allColNames.add(fkColums.get(i).getColumnName().toString());
 				try {
-					Field valF = clays.getDeclaredField(objPkField.getName());
+					Field valF = clays.getDeclaredField(fkColums.get(i).getName());
+					// filling values.
 					valF.setAccessible(true);
-					//Getting the object PK value
-					PKValue = (int) valF.get(obj);
+					values.add((T) valF.get(obj));
 				} catch (NoSuchFieldException | SecurityException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} 
-				catch (IllegalAccessException e) {
+				} catch (IllegalAccessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+				// filling types.
+				types.add((T) fkColums.get(i).getType());
+			}
+		}
+
+		//Now, build the SQL string
+		sql_sb.append("UPDATE " + tableName + " SET ");
+		for(int i=0; i<values.size(); i++) {
+			
+			if(i+1!=values.size()) {
+				sql_sb.append(allColNames.get(i)+" = ");
+				if (types.get(i).toString().equalsIgnoreCase("int")) {
+					sql_sb.append((int) values.get(i)+" , ");
+				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
+					sql_sb.append(" '"+values.get(i).toString()+"' , ");
+				} else {
+					sql_sb.append((int) values.get(i)+" , ");
 				}
 				
-				// Building the sql string before loading PK for deletion;
-				StringBuilder sql_sb = new StringBuilder();
-				sql_sb.append("DELETE FROM " + tableName + " WHERE "+ PKFieldName +" = "+PKValue);
-				try (Connection conn = d.getConnection()) {
-					
-					PreparedStatement st = conn.prepareStatement(sql_sb.toString());
-					st.executeUpdate();
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			} else {
+				sql_sb.append(allColNames.get(i)+" = ");
+				if (types.get(i).toString().equalsIgnoreCase("int")) {
+					sql_sb.append((int) values.get(i));
+				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
+					sql_sb.append(" '"+values.get(i).toString()+"' ");
+				} else {
+					sql_sb.append((int) values.get(i));
 				}
-	}
-
-	public void updateInDb(Object obj) {
-		//Update
+				
+			}
+			
+		}
+		
+		//Extracting the PK field value of the obj
+		try {
+			Field valF = clays.getDeclaredField(thePKofObj.getName());
+			// filling values.
+			valF.setAccessible(true);
+			PK_value = valF.getInt(obj);
+		} catch (NoSuchFieldException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sql_sb.append(" WHERE "+thePKofObj.getColumnName()+" = "+PK_value);
+		 
+		try (Connection conn = d.getConnection()) {
+			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void readFromDb(Object obj) {
@@ -207,16 +322,16 @@ public class Session<T> {
 		// Getting to know the obj
 		String tableName = theClass.getTableNameFromMetaClass();
 		PkField objPkField = theClass.getPrimaryKey();
-		
-		int PKValue = 0 ;
-		
-		//This is the object PK Field Name
+
+		int PKValue = 0;
+
+		// This is the object PK Field Name
 		String PKFieldName = objPkField.getName();
-		
+
 		try {
 			Field valF = clays.getDeclaredField(objPkField.getName());
 			valF.setAccessible(true);
-			//Getting the object PK value
+			// Getting the object PK value
 			PKValue = (int) valF.get(obj);
 		} catch (NoSuchFieldException | SecurityException e) {
 			// TODO Auto-generated catch block
@@ -224,33 +339,33 @@ public class Session<T> {
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// Building the sql string before loading PK for deletion;
 		StringBuilder sql_sb = new StringBuilder();
-		sql_sb.append("SELECT * FROM " + tableName + " WHERE "+ PKFieldName +" = "+PKValue+";");
+		sql_sb.append("SELECT * FROM " + tableName + " WHERE " + PKFieldName + " = " + PKValue + ";");
 		try (Connection conn = d.getConnection()) {
-			
+
 			PreparedStatement st = conn.prepareStatement(sql_sb.toString());
-			
+
 			ResultSet rs = st.executeQuery();
-			
+
 			ResultSetMetaData rsmd = rs.getMetaData();
-			
+
 			int columnsNumber = rsmd.getColumnCount();
 			while (rs.next()) {
-				 System.out.println("\n====== "+rsmd.getTableName(1)+" with ID of "+rs.getObject(1).toString()+" ======");
-			    for (int i = 1; i <= columnsNumber; i++) {
-			        String columnValue = rs.getObject(i).toString();
-			        System.out.print( rsmd.getColumnName(i)+ " => " +columnValue+"\n" );
-			    }
-			    System.out.println("===========================================");
+				System.out.println(
+						"\n====== " + rsmd.getTableName(1) + " with ID of " + rs.getObject(1).toString() + " ======");
+				for (int i = 1; i <= columnsNumber; i++) {
+					String columnValue = rs.getObject(i).toString();
+					System.out.print(rsmd.getColumnName(i) + " => " + columnValue + "\n");
+				}
+				System.out.println("===========================================");
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

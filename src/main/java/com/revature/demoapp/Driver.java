@@ -87,5 +87,20 @@ public class Driver {
 //		s.readFromDb(pokToRead);
 		
 		
+		/*updating*/
+//		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
+		/*======================*/
+//		Compartment cToUpdate = new Compartment();
+//		cToUpdate.setCompartmentId(1);
+//		cToUpdate.setCompartmentCapacity(233);
+//		cToUpdate.setCompartmentLocation("New compartment address");
+//		cToUpdate.setCompartmentName("new compartment name");
+//		s.updateInDb(cToUpdate);
+		
+		//verify update
+//		Compartment cToRead = new Compartment();
+//		cToRead.setCompartmentId(1);
+//		s.readFromDb(cToRead);
+		
 	}
 }
