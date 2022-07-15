@@ -133,11 +133,40 @@ public class DbConfig {
 		ConnectionPooling.setPassword(dbPassword);
 		ConnectionPooling.setSchema(dbSchema);
 	}
+	
+	public void setupConnection(String dnUrl, String dbUsername, String dbPassword, String dbSchema, String driverName) {
+		ConnectionPooling.setUrl(dnUrl);
+		ConnectionPooling.setUsername(dbUsername);
+		ConnectionPooling.setPassword(dbPassword);
+		ConnectionPooling.setSchema(dbSchema);
+		ConnectionPooling.setDriver(driverName);
+
+	}
 
 	public void setSchema(String schema) {
 		ConnectionPooling.setSchema(schema);
 	}
 
+	public void setDriver(String driverName) {
+		ConnectionPooling.setDriver(driverName);
+	}
+	
+	public void setConnectionTimeout(long time) {
+		ConnectionPooling.setConnectionTimeout(time);
+	}
+	
+	public void setMaxLifetime(long maxlife) {
+		ConnectionPooling.setMaxLifetime(maxlife);
+	}
+	
+	public void setAutoCommit(boolean auto) {
+		ConnectionPooling.setAutoCommit(auto);
+	}
+	
+	public void setIdleTimeout(long idle) {
+		ConnectionPooling.setIdleTimeout(idle);
+	}
+	
 	public Connection getConnection() throws SQLException {
 		if (ConnectionPooling.getConn() == null) {
 			throw new SQLException("Connection Failed!");

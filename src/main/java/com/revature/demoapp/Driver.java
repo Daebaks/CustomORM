@@ -15,9 +15,11 @@ public class Driver {
 
 		DbConfig conf = new DbConfig();
 		conf.setXmlPath("C:\\Users\\Nothing\\Desktop\\SpringToolsWorkSpace\\project1\\src\\main\\resources\\myorm.cfg.xml");
+		conf.setDriver("org.postgresql.Driver");
 		conf.setupConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres95");
 		conf.setSchema("orm");
 		conf.buildDb();
+		
 
 		// TESTING//
 		Session s = new Session();

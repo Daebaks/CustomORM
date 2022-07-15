@@ -8,17 +8,28 @@ public class ConnectionPooling {
 
 	private static HikariDataSource ds=new HikariDataSource();
 	
-	static {
-//		ds.setAutoCommit(false);
-		ds.setConnectionTimeout(3000000);
-//		ds.setIdleTimeout(600000);
-//		ds.setMaxLifetime(1800000);
-		 
-        ds.setDriverClassName("org.postgresql.Driver");        
-    }
-		
 	private ConnectionPooling() {
-		
+		//default empty constructor
+	}
+	
+	public static void setDriver(String dr) {
+		ds.setDriverClassName(dr);
+	}
+	
+	public static void setConnectionTimeout(long time) {
+		ds.setConnectionTimeout(time);
+	}
+	
+	public static void setMaxLifetime(long maxlife) {
+		ds.setMaxLifetime(maxlife);
+	}
+	
+	public static void setAutoCommit(boolean auto) {
+		ds.setAutoCommit(auto);
+	}
+	
+	public static void setIdleTimeout(long idle) {
+		ds.setIdleTimeout(idle);
 	}
 	
 	public static void setUrl(String url) {
