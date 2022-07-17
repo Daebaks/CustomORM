@@ -28,29 +28,29 @@ public class Driver {
 		
         /*insertion*/
 		/*======================*/
-//		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
-//		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
-//		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
-//		List<Achievement> achlist = new ArrayList<Achievement>();
-//		achlist.add(ach1);
-//		achlist.add(ach2);
-//		achlist.add(ach3);
+		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
+		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
+		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
+		List<Achievement> achlist = new ArrayList<Achievement>();
+		achlist.add(ach1);
+		achlist.add(ach2);
+		achlist.add(ach3);
 		
 		/*insert 3 achievements*/
 //		for(Achievement a : achlist) {
 //			s.insertToDb(a);
 //		}
 		
-//		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
+		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
 		
 		/*insert 1 compartment returning the generated ID*/
 //		System.out.println(s.insertToDb(comp));
 		
 		
-//		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
+		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
 		
 		/*insert 1 pokemon*/
-//       s.insertToDb(pok1);
+       s.insertToDb(pok1);
          
 //         Pokemon pok2 = new Pokemon("Poki2", "Beautiful",1200,"Nice land",comp, achlist );
          
@@ -63,10 +63,12 @@ public class Driver {
          /*Deletion*/
 		/*======================*/
 //		Pokemon pokToDelete = new Pokemon();
+		
+//		pokToDelete.setPokemonId(1);
 //		s.deleteFromDb(pokToDelete);
 
 //		Achievement achToDelete = new Achievement();
-//		achToDelete.setAchievementId();
+//		achToDelete.setAchievementId(3);
 //		s.deleteFromDb(achToDelete);
 
 		
@@ -81,7 +83,7 @@ public class Driver {
 //		s.readFromDb(cToRead);
 		
 //		Achievement achToRead = new Achievement();
-//		achToRead.setAchievementId();
+//		achToRead.setAchievementId(2);
 //		s.readFromDb(achToRead);
 		
 //		Pokemon pokToRead = new Pokemon();
@@ -90,7 +92,7 @@ public class Driver {
 		
 		
 		/*updating*/
-//		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
+//		Compartment comp1 = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
 		/*======================*/
 //		Compartment cToUpdate = new Compartment();
 //		cToUpdate.setCompartmentId(1);
@@ -100,9 +102,9 @@ public class Driver {
 //		s.updateInDb(cToUpdate);
 		
 		//verify update
-//		Compartment cToRead = new Compartment();
-//		cToRead.setCompartmentId(1);
-//		s.readFromDb(cToRead);
+//		Compartment cToRead1 = new Compartment();
+//		cToRead1.setCompartmentId(1);
+//		s.readFromDb(cToRead1);
 		
 	}
 }
