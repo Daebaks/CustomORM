@@ -22,9 +22,11 @@
 - Execute `nvm install`
 - Add the dependency in your pom.xml
 
-```<groupId>com.revature</groupId>
-   <artifactId>project1</artifactId>
-   <version>0.0.1-SNAPSHOT</version>
+```
+<groupId>com.revature</groupId>
+<artifactId>project1</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+
 ```
 
 # Annotations/relations
