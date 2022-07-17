@@ -2,7 +2,6 @@ package com.revature.demoapp;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.revature.configs.DbConfig;
 import com.revature.demoapp.models.Achievement;
 import com.revature.demoapp.models.Compartment;
@@ -28,29 +27,35 @@ public class Driver {
 		
         /*insertion*/
 		/*======================*/
-		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
-		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
-		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
-		List<Achievement> achlist = new ArrayList<Achievement>();
-		achlist.add(ach1);
-		achlist.add(ach2);
-		achlist.add(ach3);
+//		Achievement ach1 = new Achievement("Killing the monster","Killed a very huge monster who was destroying the city");
+//		Achievement ach2 = new Achievement("Gained","Worked and searched for a super power unitl they got it");
+//		Achievement ach3 = new Achievement("Changed color","Realized how to use their super power to change color to hide");
+//		List<Achievement> achlist = new ArrayList<Achievement>();
+//		achlist.add(ach1);
+//		achlist.add(ach2);
+//		achlist.add(ach3);
 		
 		/*insert 3 achievements*/
 //		for(Achievement a : achlist) {
 //			s.insertToDb(a);
 //		}
 		
-		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
+//		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
 		
 		/*insert 1 compartment returning the generated ID*/
-//		System.out.println(s.insertToDb(comp));
+		
+		//Service layer is needed to persist the FK
+		//Should be the same for the object set locally and accordingly once
+		//Essential info needed for the FKrelation when using with Pokemon
+//		int compartmentPKgenerated = s.insertToDb(comp);
+		//Needed to be set locally to use when using the compartment object and inserting a pokemon
+//		comp.setCompartmentId(compartmentPKgenerated);
 		
 		
-		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
+//		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
 		
 		/*insert 1 pokemon*/
-       s.insertToDb(pok1);
+//       s.insertToDb(pok1);
          
 //         Pokemon pok2 = new Pokemon("Poki2", "Beautiful",1200,"Nice land",comp, achlist );
          

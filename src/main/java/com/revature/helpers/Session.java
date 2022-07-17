@@ -19,7 +19,7 @@ public class Session<T> {
 	DbConfig d = new DbConfig();
 
 	public int insertToDb(Object obj) {
-
+		
 		// Extracting the metaClassModel from the object.
 		Class<?> clays;
 		clays = obj.getClass();
@@ -60,7 +60,6 @@ public class Session<T> {
 			types.add((T) columns.get(i).getType());
 			if (i + 1 == columns.size() + fkColums.size()) {
 				sql_sb.append(" ) Values ( ");
-
 				for (int k = 0; k < columns.size() + fkColums.size(); k++) {
 					sql_sb.append(" ? ");
 					if (k + 1 == columns.size() + fkColums.size()) {
@@ -81,8 +80,10 @@ public class Session<T> {
 							// filling values.
 							valF.setAccessible(true);
 							Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
-							values.add((T) "1"); // for the foreignKey(PK of relation) this needs to be changed
-													// dynamically
+							Object fkObj = valF.get(obj);
+							Field fkField = fkObj.getClass().getDeclaredFields()[0];
+							fkField.setAccessible(true);
+							values.add((T) fkField.get(fkObj)); // for the foreignKey(PK of relation) this needs to be changed dynamically
 						} catch (NoSuchFieldException | SecurityException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -97,12 +98,9 @@ public class Session<T> {
 							e.printStackTrace();
 						}
 						// filling types.
-
-						types.add((T) "PK");
-
+						types.add((T) "int");
 					}
 					sql_sb.append(" ) Values ( ");
-
 					for (int k = 0; k < columns.size() + fkColums.size(); k++) {
 						sql_sb.append(" ? ");
 						if (k + 1 == columns.size() + fkColums.size()) {
@@ -121,15 +119,11 @@ public class Session<T> {
 
 				if (types.get(i).toString().equalsIgnoreCase("int")) {
 					st.setInt(i + 1, (int) values.get(i));
-
 				} else if (types.get(i).toString().equalsIgnoreCase("class java.lang.String")) {
 					st.setString(i + 1, values.get(i).toString());
 				}
-
-				else if (types.get(i).toString().equalsIgnoreCase("PK")) {
-					st.setInt(i + 1, 1); // for the demo to proceed.
-				} else {
-					st.setInt(i + 1, (Integer) values.get(i));
+				else {
+					st.setInt(i + 1, (int) values.get(i));
 				}
 			}
 			ResultSet rs;
@@ -141,9 +135,7 @@ public class Session<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return returnedId;
-
 	}
 
 	public void deleteFromDb(Object obj) {
