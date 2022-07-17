@@ -98,3 +98,6 @@
 `void setAutoCommit(boolean isEnabled)` - changes auto commit mode for the current connection.
 
 `void setSavepoint(String name)` - set savepoint with specified name.
+
+# TO-DO
+- Full support of M:M
