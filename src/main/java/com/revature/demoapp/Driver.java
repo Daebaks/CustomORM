@@ -44,13 +44,13 @@ public class Driver {
 		Compartment comp = new Compartment("pokemon container", "Somewhere in mystery land", 1000);
 		
 		/*insert 1 compartment returning the generated ID*/
-//		System.out.println(s.insertToDb(comp));
+		System.out.println(s.insertToDb(comp));
 		
 		
 		Pokemon pok1 = new Pokemon("Poki", "Very strong",1500,"Nice land",comp, achlist );
 		
 		/*insert 1 pokemon*/
-       s.insertToDb(pok1);
+//       s.insertToDb(pok1);
          
 //         Pokemon pok2 = new Pokemon("Poki2", "Beautiful",1200,"Nice land",comp, achlist );
          

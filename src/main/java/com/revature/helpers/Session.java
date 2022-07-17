@@ -1,5 +1,7 @@
 package com.revature.helpers;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +9,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
+
 import com.revature.configs.DbConfig;
 import com.revature.util.ColumnField;
 import com.revature.util.FkField;
@@ -19,7 +28,9 @@ public class Session<T> {
 	DbConfig d = new DbConfig();
 
 	public int insertToDb(Object obj) {
-
+		//TESTING REFACTORING
+		System.out.println(beanProperties(obj));
+		
 		// Extracting the metaClassModel from the object.
 		Class<?> clays;
 		clays = obj.getClass();
@@ -81,7 +92,8 @@ public class Session<T> {
 							// filling values.
 							valF.setAccessible(true);
 							Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
-							System.out.println(clazzTemp);
+//							System.out.println(clazzTemp);
+//							System.out.println();
 							values.add((T) "1"); // for the foreignKey(PK of relation) this needs to be changed
 													// dynamically
 						} catch (NoSuchFieldException | SecurityException e) {
@@ -98,7 +110,7 @@ public class Session<T> {
 							e.printStackTrace();
 						}
 						// filling types.
-						System.out.println((T) fkColums.get(x).getType());
+//						System.out.println((T) fkColums.get(x).getColumnName());
 						types.add((T) "PK");
 
 					}
@@ -130,7 +142,7 @@ public class Session<T> {
 				else if (types.get(i).toString().equalsIgnoreCase("PK")) {
 					st.setInt(i + 1, 1); // for the demo to proceed.
 				} else {
-					st.setInt(i + 1, (Integer) values.get(i));
+					st.setInt(i + 1, (int) values.get(i));
 				}
 			}
 			ResultSet rs;
@@ -142,8 +154,8 @@ public class Session<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(values);
-		System.out.println(types);
+//		System.out.println(values);
+//		System.out.println(types);
 		return returnedId;
 
 	}
@@ -373,5 +385,30 @@ public class Session<T> {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private Map<String, Object> beanProperties(Object bean) {
+	    try {
+	        Map<String, Object> map = new HashMap<>();
+	        Arrays.asList(Introspector.getBeanInfo(bean.getClass(), Object.class)
+	                                  .getPropertyDescriptors())
+	              .stream()
+	              // filter out properties with setters only
+	              .filter(pd -> Objects.nonNull(pd.getReadMethod()))
+	              .forEach(pd -> { // invoke method to get value
+	                  try {
+	                      Object value = pd.getReadMethod().invoke(bean);
+	                      if (value != null) {
+	                          map.put(pd.getName(), value);
+	                      }
+	                  } catch (Exception e) {
+	                      // add proper error handling here
+	                  }
+	              });
+	        return map;
+	    } catch (IntrospectionException e) {
+	        // and here, too
+	        return Collections.emptyMap();
+	    }
 	}
 }
