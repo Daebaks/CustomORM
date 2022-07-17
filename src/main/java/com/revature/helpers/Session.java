@@ -81,6 +81,7 @@ public class Session<T> {
 							// filling values.
 							valF.setAccessible(true);
 							Class<?> clazzTemp = Class.forName(valF.get(obj).getClass().toString().substring(6));
+							System.out.println(clazzTemp);
 							values.add((T) "1"); // for the foreignKey(PK of relation) this needs to be changed
 													// dynamically
 						} catch (NoSuchFieldException | SecurityException e) {
@@ -97,7 +98,7 @@ public class Session<T> {
 							e.printStackTrace();
 						}
 						// filling types.
-
+						System.out.println((T) fkColums.get(x).getType());
 						types.add((T) "PK");
 
 					}
@@ -141,7 +142,8 @@ public class Session<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		System.out.println(values);
+		System.out.println(types);
 		return returnedId;
 
 	}
